@@ -3,7 +3,7 @@ var db = require('./dbConnect');
 const router = express.Router();
 
 // Lấy danh sách dự án
-router.get('/', function(req, res) {
+router.get('/', async (req, res) =>{
     const query = `
       SELECT project.*, projectDetails.*,
        user.fullName AS leadFullName ,
@@ -14,7 +14,7 @@ router.get('/', function(req, res) {
       LEFT JOIN Users AS user ON projectDetails.userID = user.userID
       LEFT JOIN Team AS team ON projectDetails.teamID = team.teamID
     `;
-    db.query(query, function(err, result) {
+    db.query(query, async (err, result)=> {
         if (err) {
             console.error(err);
             res.status(500).send("Lỗi Server Nội Bộ");
